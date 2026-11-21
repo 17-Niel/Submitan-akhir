@@ -1,3 +1,5 @@
+import { sanitizePushSubscription } from './utils/push-subscription.js';
+
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'https://story-api.dicoding.dev/v1').replace(/\/$/, '');
 
 function authHeaders(token = localStorage.getItem('jejak-token')) {
@@ -65,10 +67,11 @@ export function getVapidKey() {
 }
 
 export function subscribePush(subscription) {
+  const payload = sanitizePushSubscription(subscription);
   return request('/notifications/subscribe', {
     method: 'POST',
     headers: { ...authHeaders(), 'Content-Type': 'application/json' },
-    body: JSON.stringify(subscription),
+    body: JSON.stringify(payload),
   });
 }
 

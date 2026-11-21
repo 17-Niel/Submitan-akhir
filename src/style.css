@@ -28,6 +28,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .site-header { height: 82px; padding: 0 7.2%; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--paper); }
 main { animation: page-in .24s ease-out; }
 @keyframes page-in { from { opacity: .68; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: ease-out;
+}
+
+::view-transition-old(root) {
+  animation-name: view-fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: view-fade-in;
+}
+
+@keyframes view-fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes view-fade-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 23px; font-weight: 700; letter-spacing: -1.2px; color: var(--forest); }
 .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; color: var(--lime); background: var(--forest); border-radius: 50% 50% 50% 8px; font-family: Georgia, serif; font-size: 19px; font-style: italic; }
 .brand-dot { color: #94ac3e; }
