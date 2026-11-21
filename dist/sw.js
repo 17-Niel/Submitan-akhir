@@ -54,14 +54,15 @@ self.addEventListener('push', (event) => {
   } catch {
     payload = { body: event.data?.text() || 'Ada cerita baru untuk dijelajahi.' };
   }
-  const story = payload.story || payload.data || {};
+  const notification = payload.options || {};
+  const story = payload.story || payload.data || notification.data || {};
   const title = payload.title || story.name || 'Cerita baru di Jejak';
   const options = {
-    body: payload.body || payload.message || story.description || 'Seseorang baru saja membagikan cerita perjalanan.',
-    icon: payload.icon || '/icons/icon-192.png',
-    badge: payload.badge || '/icons/icon-192.png',
+    body: payload.body || payload.message || notification.body || story.description || 'Seseorang baru saja membagikan cerita perjalanan.',
+    icon: payload.icon || notification.icon || '/icons/icon-192.png',
+    badge: payload.badge || notification.badge || '/icons/icon-192.png',
     data: {
-      url: payload.url || payload.data?.url || (story.id ? `/#/story/${encodeURIComponent(story.id)}` : '/#/home'),
+      url: payload.url || notification.data?.url || (story.id ? `/#/story/${encodeURIComponent(story.id)}` : '/#/home'),
     },
     actions: [{ action: 'open', title: 'Buka cerita' }, { action: 'close', title: 'Nanti saja' }],
     tag: story.id ? `story-${story.id}` : 'jejak-story',

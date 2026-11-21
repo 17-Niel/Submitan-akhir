@@ -21,7 +21,7 @@ npm run preview
 Import repository di Vercel dengan framework preset **Vite**. Build command `npm run build`, output directory `dist`. `vercel.json` mengarahkan seluruh rute SPA ke `index.html`.
 
 API menggunakan `https://story-api.dicoding.dev/v1` secara default. Jika perlu mengganti endpoint, set `VITE_API_BASE_URL` pada Vercel Project Settings sebelum build. Jangan masukkan token pengguna ke environment variable; token disimpan di browser setelah login.
-
+ss
 ## Fitur
 
 - Jelajahi cerita Story API, cari cerita, lihat marker dan lokasi pada OpenStreetMap.
