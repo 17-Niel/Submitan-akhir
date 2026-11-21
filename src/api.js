@@ -57,9 +57,11 @@ export function createStory({ description, photo, lat, lon, guest = false }) {
 }
 
 export function getVapidKey() {
-  return Promise.resolve({
-    publicKey: 'BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk',
-  });
+  return request('/notifications/vapid-public-key', { headers: authHeaders() }).catch(() =>
+    ({
+      publicKey: 'BCCs2eonMI-6H2ctvFaWg-UYdDv387Vno_bzUzALpB442r2lCnsHmtrx8biyPi_E-1fSGABK_Qs_GlvPoJJqxbk',
+    }),
+  );
 }
 
 export function subscribePush(subscription) {

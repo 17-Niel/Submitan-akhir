@@ -653,7 +653,7 @@ async function togglePush() {
       const permission = await Notification.requestPermission();
       if (permission !== 'granted') throw new Error('Izin notifikasi belum diberikan.');
       const result = await getVapidKey();
-      const publicKey = result?.data?.publicKey || result?.publicKey;
+      const publicKey = result?.data?.publicKey || result?.publicKey || result?.vapidPublicKey;
       if (!publicKey) throw new Error('Public VAPID key tidak tersedia dari server.');
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,

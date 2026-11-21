@@ -1,5 +1,6 @@
-const CACHE_NAME = 'jejak-shell-v1';
+const CACHE_NAME = 'jejak-shell-v2';
 const SHELL_URLS = ['/', '/index.html', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png'];
+const STORY_API_ORIGIN = 'https://story-api.dicoding.dev';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -20,6 +21,18 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
+  if (request.method === 'GET' && url.origin === STORY_API_ORIGIN) {
+    event.respondWith(
+      fetch(request).then((response) => {
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+        }
+        return response;
+      }).catch(() => caches.match(request)),
+    );
+    return;
+  }
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
   if (request.mode === 'navigate') {
